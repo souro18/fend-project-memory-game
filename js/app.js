@@ -2,7 +2,6 @@
  * Create a list that holds all of your cards
  */
 
-
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -24,7 +23,46 @@ function shuffle(array) {
 
     return array;
 }
-
+// my scripts
+function createcards(){
+	const classes=['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
+	// create basic card dom
+	
+	var cards=[];
+	for(let i=0;i<classes.length;i++){
+		let li=document.createElement('li');
+	li.classList.add('card');
+	let iTag=document.createElement('i');
+	iTag.classList.add('fa');
+	// add i classes in cards and data-tag..
+	
+		li.setAttribute("index",i);
+		iTag.classList.add(classes[i]);
+		li.appendChild(iTag);
+		cards.push(li);
+		cards.push(li);
+	}
+	console.log(cards);
+	cards=shuffle(cards);
+	// shuffle..
+	// add to page
+	let deck = document.getElementsByClassName("deck")[0];
+	console.log(deck);
+	console.log(cards.length);
+	for(let i=0;i<cards.length;i++){
+		console.log(cards[i]);
+		// typeof cards[i];
+		deck.innerHTML+=cards[i].outerHTML;
+	}
+}
+createcards();
+const cards=document.querySelectorAll('.card');
+for(let i=0 ;i<cards.length; i++){
+	cards[i].addEventListener('click',function(){
+		// alert('clicked');
+		this.classList.toggle("show");
+	});
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
