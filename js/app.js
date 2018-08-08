@@ -8,6 +8,9 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+let array=[];
+const score=document.getElementsByClassName('moves')[0];
+let matchedCards=0;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -30,17 +33,16 @@ function createcards(){
 	
 	var cards=[];
 	for(let i=0;i<classes.length;i++){
-		let li=document.createElement('li');
-	li.classList.add('card');
-	let iTag=document.createElement('i');
-	iTag.classList.add('fa');
-	// add i classes in cards and data-tag..
-	
-		li.setAttribute("index",i);
-		iTag.classList.add(classes[i]);
-		li.appendChild(iTag);
-		cards.push(li);
-		cards.push(li);
+		for(let j=0;j<=1;j++){
+			let li=document.createElement('li');
+			li.classList.add('card');
+			let iTag=document.createElement('i');
+			iTag.classList.add('fa');
+			li.setAttribute("index",j*8+i);
+			iTag.classList.add(classes[i]);
+			li.appendChild(iTag);
+			cards.push(li);
+		}
 	}
 	console.log(cards);
 	cards=shuffle(cards);
@@ -55,13 +57,58 @@ function createcards(){
 		deck.innerHTML+=cards[i].outerHTML;
 	}
 }
+function match(card1,card2){
+	card1.classList.add("match");
+	card2.classList.add("match");
+	card1.removeEventListener('click',clickEvent);
+	card2.removeEventListener('click',clickEvent);
+	console.log('removed');
+}
+async function mismatch(card1,card2){
+	card1.classList.toggle("mismatch");
+	card2.classList.toggle("mismatch");
+	await new Promise(resolve => setTimeout(resolve, 500));
+	card1.classList.toggle("mismatch");
+	card2.classList.toggle("mismatch");
+	card1.classList.toggle("show");
+	card2.classList.toggle("show");
+
+
+}
+
+
+
+function process(card){
+	let ind=card.getAttribute('index');
+	if(array.length===0){
+		array.push(card);
+	}
+	else{
+		score.innerHTML=Number(score.innerHTML)+1;
+
+		if(Math.abs(array[0].getAttribute('index')-ind)==8){
+			match(array[0],card);
+			matchedCards+=1;
+			if(matchedCards===8){
+				console.log("finished " + score.innerHTML);
+			}
+		}
+		else{
+			mismatch(card,array[0]);
+		}
+		array.pop();
+	}
+	console.log(array);
+}
+function clickEvent(card){
+	this.classList.toggle("show");
+	process(this);
+}
+
 createcards();
 const cards=document.querySelectorAll('.card');
 for(let i=0 ;i<cards.length; i++){
-	cards[i].addEventListener('click',function(){
-		// alert('clicked');
-		this.classList.toggle("show");
-	});
+	cards[i].addEventListener('click',clickEvent);
 }
 
 /*
