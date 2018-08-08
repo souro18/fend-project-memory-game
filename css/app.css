@@ -87,7 +87,9 @@ h1 {
 /*
  * Styles for the Score Panel
  */
-
+.star-colour {
+    color: #ecec13;
+}
 .score-panel {
     text-align: left;
     width: 345px;

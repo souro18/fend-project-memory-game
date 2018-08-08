@@ -14,6 +14,7 @@ let matchedCards=0;
 let sec=0;
 let min=0;
 let interval=null;
+const stars=document.getElementsByClassName('fa-star');
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -73,6 +74,7 @@ function restartEvent(){
 	if(array.length!=0){
 		array.pop();
 	}
+	resetStar();
 	sec=0;
 	min=0;
 }
@@ -106,7 +108,27 @@ async function count(){
 	
 	interval=setInterval(displayTime,1000);
 }
-
+function resetStar(){
+	stars[0].classList.add('star-colour');
+	stars[1].classList.add('star-colour');
+	stars[2].classList.add('star-colour');
+}
+function updateStar(scor){
+	if(scor===15){
+		stars[2].classList.toggle('star-colour');
+	}
+	if(scor===25){
+		stars[1].classList.toggle('star-colour');
+	}
+	if(scor===35){
+		stars[0].classList.toggle('star-colour');
+	}
+}
+function updateScore(){
+	const sc=Number(score.innerHTML);
+	score.innerHTML=sc+1;
+	updateStar(sc+1);
+}
 
 function process(card){
 	let ind=card.getAttribute('index');
@@ -114,7 +136,7 @@ function process(card){
 		array.push(card);
 	}
 	else{
-		score.innerHTML=Number(score.innerHTML)+1;
+		updateScore();
 
 		if(Math.abs(array[0].getAttribute('index')-ind)==8){
 			match(array[0],card);
@@ -141,6 +163,7 @@ for(let i=0 ;i<cards.length; i++){
 	cards[i].addEventListener('click',clickEvent);
 }
 count();
+resetStar();
 const restart=document.getElementsByClassName('fa-repeat')[0];
 restart.addEventListener('click',restartEvent);
 
