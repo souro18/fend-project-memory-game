@@ -57,6 +57,20 @@ function createcards(){
 		deck.innerHTML+=cards[i].outerHTML;
 	}
 }
+
+function restartEvent(){
+	console.log('restart functoin');
+	for(let i=0;i<cards.length;i++){
+		cards[i].classList.remove('match');
+		cards[i].classList.remove('show');
+		cards[i].addEventListener('click',clickEvent);
+	}
+	shuffle(cards);
+	score.innerHTML=0;
+	if(array.length!=0){
+		array.pop();
+	}
+}
 function match(card1,card2){
 	card1.classList.add("match");
 	card2.classList.add("match");
@@ -104,13 +118,13 @@ function clickEvent(card){
 	this.classList.toggle("show");
 	process(this);
 }
-
 createcards();
 const cards=document.querySelectorAll('.card');
 for(let i=0 ;i<cards.length; i++){
 	cards[i].addEventListener('click',clickEvent);
 }
-
+const restart=document.getElementsByClassName('fa-repeat')[0];
+restart.addEventListener('click',restartEvent);
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)

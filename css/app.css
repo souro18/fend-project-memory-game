@@ -73,6 +73,7 @@ h1 {
 
 .deck .card.show {
     font-size: 33px;
+    background: #76b31a;
 }
 
 .deck .card.match {
