@@ -11,6 +11,9 @@
 let array=[];
 const score=document.getElementsByClassName('moves')[0];
 let matchedCards=0;
+let sec=0;
+let min=0;
+let interval=null;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -70,6 +73,8 @@ function restartEvent(){
 	if(array.length!=0){
 		array.pop();
 	}
+	sec=0;
+	min=0;
 }
 function match(card1,card2){
 	card1.classList.add("match");
@@ -89,7 +94,18 @@ async function mismatch(card1,card2){
 
 
 }
-
+function displayTime(){
+	sec++;
+	if(sec===60){
+		sec=0;
+		min++;
+	}
+	document.getElementById("time").innerHTML= ((min<10)? ("0"+min) : min.toString()) + " : "+ ((sec<10)? ("0"+sec): sec.toString());
+}
+async function count(){
+	
+	interval=setInterval(displayTime,1000);
+}
 
 
 function process(card){
@@ -105,6 +121,7 @@ function process(card){
 			matchedCards+=1;
 			if(matchedCards===8){
 				console.log("finished " + score.innerHTML);
+				clearInterval(interval);
 			}
 		}
 		else{
@@ -123,8 +140,10 @@ const cards=document.querySelectorAll('.card');
 for(let i=0 ;i<cards.length; i++){
 	cards[i].addEventListener('click',clickEvent);
 }
+count();
 const restart=document.getElementsByClassName('fa-repeat')[0];
 restart.addEventListener('click',restartEvent);
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
