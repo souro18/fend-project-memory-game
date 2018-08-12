@@ -10,6 +10,11 @@
  */
 let array=[];
 const score=document.getElementsByClassName('moves')[0];
+const time=document.getElementById('time');
+const modal=document.getElementById('mod');
+const finalMove=document.getElementById('final-move');
+const finalTime=document.getElementById('final-time');
+const star=document.getElementById('star');
 let matchedCards=0;
 let sec=0;
 let min=0;
@@ -75,8 +80,7 @@ function restartEvent(){
 		array.pop();
 	}
 	resetStar();
-	sec=0;
-	min=0;
+	count();
 }
 function match(card1,card2){
 	card1.classList.add("match");
@@ -102,10 +106,11 @@ function displayTime(){
 		sec=0;
 		min++;
 	}
-	document.getElementById("time").innerHTML= ((min<10)? ("0"+min) : min.toString()) + " : "+ ((sec<10)? ("0"+sec): sec.toString());
+	time.innerHTML= ((min<10)? ("0"+min) : min.toString()) + " : "+ ((sec<10)? ("0"+sec): sec.toString());
 }
 async function count(){
-	
+	sec=0;
+	min=0;
 	interval=setInterval(displayTime,1000);
 }
 function resetStar(){
@@ -129,7 +134,13 @@ function updateScore(){
 	score.innerHTML=sc+1;
 	updateStar(sc+1);
 }
-
+function showScore(){
+	finalTime.innerHTML=time.innerHTML;
+	finalMove.innerHTML=score.innerHTML;
+	star.innerHTML=document.getElementsByClassName('stars')[0].innerHTML;
+	star.style.fontSize="2em";
+	modal.style.display='block';
+}
 function process(card){
 	let ind=card.getAttribute('index');
 	if(array.length===0){
@@ -144,6 +155,7 @@ function process(card){
 			if(matchedCards===8){
 				console.log("finished " + score.innerHTML);
 				clearInterval(interval);
+				showScore();
 			}
 		}
 		else{
@@ -166,6 +178,13 @@ count();
 resetStar();
 const restart=document.getElementsByClassName('fa-repeat')[0];
 restart.addEventListener('click',restartEvent);
+document.getElementById('display-topright').addEventListener('click',function(){
+	modal.style.display='none';
+});
+document.getElementById('replay').addEventListener('click',function(){
+	modal.style.display='none';
+	restartEvent();
+})
 
 /*
  * set up the event listener for a card. If a card is clicked:
