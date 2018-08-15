@@ -7,7 +7,8 @@
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
- */
+  */
+"use strict";
 let array=[];
 let cards=[];
 let deck = document.getElementsByClassName("deck")[0];
@@ -41,8 +42,6 @@ function shuffle(array) {
 function createcards(){
 	const classes=['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
 	// create basic card dom
-	
-	
 	for(let i=0;i<classes.length;i++){
 		for(let j=0;j<=1;j++){
 			let li=document.createElement('li');
@@ -55,20 +54,13 @@ function createcards(){
 			cards.push(li);
 		}
 	}
-	console.log(cards);
 	cards=shuffle(cards);
-	// shuffle..
-	// add to page
-	
-	console.log(deck);
-	console.log(cards.length);
 	for(let i=0;i<cards.length;i++){
 		deck.innerHTML+=cards[i].outerHTML;
 	}
 }
 
 function restartEvent(){
-	console.log('restart functoin');
 	matchedCards=0;
 	
 	cards=shuffle(cards);
@@ -165,7 +157,6 @@ function process(card){
 		}
 		array.pop();
 	}
-	console.log(array);
 }
 function clickEvent(card){
 	this.classList.toggle("show");
