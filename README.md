@@ -1,20 +1,20 @@
 # Memory Game Project
-
+This is a web based project which is build as a part of Udacity's [Front-End Nanodegree](https://in.udacity.com/course/front-end-web-developer-nanodegree--nd001) Program. This project primarily focuses on Dynamic web page creation and manipulation using Javascript.
 ## Table of Contents
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+* [Installation](#instructions)
+* [How To Play](#How_To_Play)
 
-## Instructions
+## Installation
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+```
+$ git clone https://github.com/souro18/fend-project-memory-game.git
+$ cd fend-project-memory-game
+```
+Or open this [link](https://souro18.github.io/fend-project-memory-game/) to play online
 
-To get started, open `js/app.js` and start building out the app's functionality
+## How To Play
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+* Click on a card to reveal it.
+* Find its matching pair.
+* Do same for all cards to win the game with minimum number of moves.
