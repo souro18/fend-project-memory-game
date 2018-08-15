@@ -9,6 +9,8 @@
  *   - add each card's HTML to the page
  */
 let array=[];
+let cards=[];
+let deck = document.getElementsByClassName("deck")[0];
 const score=document.getElementsByClassName('moves')[0];
 const time=document.getElementById('time');
 const modal=document.getElementById('mod');
@@ -40,7 +42,7 @@ function createcards(){
 	const classes=['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-leaf','fa-bicycle','fa-bomb'];
 	// create basic card dom
 	
-	var cards=[];
+	
 	for(let i=0;i<classes.length;i++){
 		for(let j=0;j<=1;j++){
 			let li=document.createElement('li');
@@ -57,24 +59,28 @@ function createcards(){
 	cards=shuffle(cards);
 	// shuffle..
 	// add to page
-	let deck = document.getElementsByClassName("deck")[0];
+	
 	console.log(deck);
 	console.log(cards.length);
 	for(let i=0;i<cards.length;i++){
-		console.log(cards[i]);
-		// typeof cards[i];
 		deck.innerHTML+=cards[i].outerHTML;
 	}
 }
 
 function restartEvent(){
 	console.log('restart functoin');
+	matchedCards=0;
+	
+	cards=shuffle(cards);
+	deck.innerHTML="";
+	
 	for(let i=0;i<cards.length;i++){
-		cards[i].classList.remove('match');
-		cards[i].classList.remove('show');
-		cards[i].addEventListener('click',clickEvent);
+		deck.innerHTML+=cards[i].outerHTML;
 	}
-	shuffle(cards);
+	const card=document.querySelectorAll('.card');
+	for(let i=0;i<card.length;i++){
+		card[i].addEventListener('click',clickEvent);
+	}
 	score.innerHTML=0;
 	if(array.length!=0){
 		array.pop();
@@ -87,7 +93,6 @@ function match(card1,card2){
 	card2.classList.add("match");
 	card1.removeEventListener('click',clickEvent);
 	card2.removeEventListener('click',clickEvent);
-	console.log('removed');
 }
 async function mismatch(card1,card2){
 	card1.classList.toggle("mismatch");
@@ -125,9 +130,7 @@ function updateStar(scor){
 	if(scor===25){
 		stars[1].classList.toggle('star-colour');
 	}
-	if(scor===35){
-		stars[0].classList.toggle('star-colour');
-	}
+
 }
 function updateScore(){
 	const sc=Number(score.innerHTML);
@@ -153,7 +156,6 @@ function process(card){
 			match(array[0],card);
 			matchedCards+=1;
 			if(matchedCards===8){
-				console.log("finished " + score.innerHTML);
 				clearInterval(interval);
 				showScore();
 			}
@@ -170,9 +172,9 @@ function clickEvent(card){
 	process(this);
 }
 createcards();
-const cards=document.querySelectorAll('.card');
-for(let i=0 ;i<cards.length; i++){
-	cards[i].addEventListener('click',clickEvent);
+const card=document.querySelectorAll('.card');
+for(let i=0 ;i<card.length; i++){
+	card[i].addEventListener('click',clickEvent);
 }
 count();
 resetStar();
